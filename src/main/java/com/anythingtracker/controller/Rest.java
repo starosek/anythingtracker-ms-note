@@ -1,10 +1,14 @@
 package com.anythingtracker.controller;
 
 import com.anythingtracker.domain.Note;
+import com.anythingtracker.storage.StorageAPI;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 public class Rest {
+    private final StorageAPI storage;
 
     public static final String GET_NOTE = "Hello";
     public static final String POST_NOTE = "New note posted";
@@ -13,8 +17,8 @@ public class Rest {
 
     @GetMapping("/notes/{id}")
     public Note getNote(@PathVariable long id){
-        Note result = new Note();
-        result.setContent(GET_NOTE);
+        Note result = storage.read(id);
+        //result.setContent(GET_NOTE);
         return result;
     }
 
